@@ -14,98 +14,98 @@ Hadoop must be installed successfully.
 Do everything listed below for every instance which is a node on hdfs network, you want to run HBase on.
 
 1. Create a directory and navigate to created directory.
-..* mkdir hbase
+    * mkdir hbase
 2. Change folder’s owner if needed: 
-..* sudo chown -R hadoop:hadoop hbase/
-..* cd hbase
+    * sudo chown -R hadoop:hadoop hbase/
+    * cd hbase
 3. Download hbase-0.94.12 to current directory.
-..* wget "https://archive.apache.org/dist/hbase/hbase-0.94.12/hbase-0.94.12.tar.gz"
+    * wget "https://archive.apache.org/dist/hbase/hbase-0.94.12/hbase-0.94.12.tar.gz"
 4. Extract hbase files to current directory.
-..* tar -xvzf hbase-0.94.12.tar.gz
+    * tar -xvzf hbase-0.94.12.tar.gz
 5. Navigate to extracted directory.
-..* cd hbase-0.94.12/conf
+    * cd hbase-0.94.12/conf
 6. Edit hbase-site.xml using vim.
-..* vim hbase-site.xml
+    * vim hbase-site.xml
 7. Set proper values to configuration properties.
 
-'''
+~~~~~~~~
 <configuration>
-...
-  <property>
-    <name>hbase.rootdir</name>
-    <value>hdfs://{hdfs.namenode.address}:{hdfs.port}/hbase</value>
-    <description>The directory shared by RegionServers.
-    </description>
-  </property>
+    ...
+	<property>
+		<name>hbase.rootdir</name>
+		<value>hdfs://{hdfs.namenode.address}:{hdfs.port}/hbase</value>
+		<description>The directory shared by RegionServers.
+		</description>
+	</property>
 
-  <property>
-    <name>hbase.tmp.dir</name>
-    <value>/work/hbase/tmp</value>
-  </property>
+	<property>
+		<name>hbase.tmp.dir</name>
+		<value>/work/hbase/tmp</value>
+	</property>
 
-  <property>
-    <name>hbase.cluster.distributed</name>
-    <value>true</value>
-    <description>The mode the cluster will be in. Possible values are
-      false: standalone and pseudo-distributed setups with managed Zookeeper
-      true: fully-distributed with unmanaged Zookeeper Quorum (see hbase-env.sh)
-    </description>
-  </property>
-
-    <property>
-      <name>hbase.zookeeper.quorum</name>
-     <value>{zookeeper.quorum.address}</value>
-      <description>Comma separated list of servers in the ZooKeeper Quorum.
-      For example, "host1.mydomain.com,host2.mydomain.com,host3.mydomain.com".
-      By default this is set to localhost for local and pseudo-distributed modes
-      of operation. For a fully-distributed setup, this should be set to a full
-      list of ZooKeeper quorum servers. If HBASE_MANAGES_ZK is set in hbase-env.sh
-      this is the list of servers which we will start/stop ZooKeeper on.
-      </description>
-    </property>
-    <property>
-      <name>hbase.zookeeper.property.dataDir</name>
-      <value>/opt/zookeeper/zk-data</value>
-      <description>Property from ZooKeeper's config zoo.cfg.
-      The directory where the snapshot is stored.
-      </description>
-    </property>
-...
+	<property>
+		<name>hbase.cluster.distributed</name>
+		<value>true</value>
+		<description>The mode the cluster will be in. Possible values are
+			false: standalone and pseudo-distributed setups with managed
+			Zookeeper true: fully-distributed with unmanaged Zookeeper 
+			Quorum (see hbase-env.sh)
+		</description>
+	</property>
+	<property>
+		<name>hbase.zookeeper.quorum</name>
+		<value>{zookeeper.quorum.address}</value>
+		<description>Comma separated list of servers in the ZooKeeper Quorum.
+			For example, "host1.mydomain.com,host2.mydomain.com,host3.mydomain.com".
+			By default this is set to localhost for local and pseudo-distributed
+			modes of operation. For a fully-distributed setup, this should be set to a
+			full list of ZooKeeper quorum servers. If HBASE_MANAGES_ZK is set in
+			hbase-env.sh this is the list of servers which we will start/stop ZooKeeper on.
+		</description>
+	</property>
+	<property>
+		<name>hbase.zookeeper.property.dataDir</name>
+		<value>/opt/zookeeper/zk-data</value>
+		<description>Property from ZooKeeper's config zoo.cfg.
+			The directory where the snapshot is stored.
+		</description>
+	</property>
+	...
 </configuration>
-'''
+~~~~~~~~
 
 8. Edit regionservers file and list all hosts that you would have running Zookeeper.
-..* vim regionservers
-..* server30
-server31
-server32
-server33
+    * vim regionservers
+    * server30
+      server31
+      server32
+      server33
 9. Add HBASE_HOME environment variable to bashrc.
-..* vim ~/.bashrc
-..* export HBASE_HOME=/opt/hbase/hbase-0.94.12
-..* export PATH=$PATH:$HADOOP_HOME/bin:$HBASE_HOME/bin:$JAVA_HOME/bin
-..* To test if variable is added successfully
-..1. Logout from user session: 
-..*exit
-..2. Log back in:
-..* sudo su - hadoop
-..3. Echo environment variable:
-..* echo $HBASE_HOME
+    * vim ~/.bashrc
+    * export HBASE_HOME=/opt/hbase/hbase-0.94.12
+    * export PATH=$PATH:$HADOOP_HOME/bin:$HBASE_HOME/bin:$JAVA_HOME/bin
+    * To test if variable is added successfully
+        1. Logout from user session: 
+            * exit
+        2. Log back in:
+            * sudo su - hadoop
+        3. Echo environment variable:
+            * echo $HBASE_HOME
 
 10. Edit hbase-env.sh, uncomment and set proper values to properties.
-..* export JAVA_HOME=/usr/lib/jvm/java-8-oracle
-..* export HBASE_HEAPSIZE=4096
-..* export HBASE_MANAGES_ZK=true
+    * export JAVA_HOME=/usr/lib/jvm/java-8-oracle
+    * export HBASE_HEAPSIZE=4096
+    * export HBASE_MANAGES_ZK=true
 11. Symlink hdfs-site.xml under ${HBASE_HOME}/conf.
-..* ln -sv /opt/hadoop/hadoop-1.0.4/conf/hdfs-site.xml hdfs-site.xml
+    * ln -sv /opt/hadoop/hadoop-1.0.4/conf/hdfs-site.xml hdfs-site.xml
 12. Create HBase temp directory and Zookeeper data directory
-..* cd /work
-..* mkdir hbase
-..* mkdir zookeeper
-..* cd hbase
-..* mkdir tmp
-..* cd /work/zookeeper
-..* mkdir zk-data
+    * cd /work
+    * mkdir hbase
+    * mkdir zookeeper
+    * cd hbase
+    * mkdir tmp
+    * cd /work/zookeeper
+    * mkdir zk-data
 
 ## Starting HBase:
 
@@ -124,7 +124,9 @@ When you run “hbase hbck”, there must be no inconsistencies detected. If an 
 ### Checking HBase Shell:
 
 If HBase initialised successfully, you should be able to run “hbase shell” command to access tables. After running “hbase shell” if you come across 
+~~~~~~~~
 java.lang.RuntimeException: java.lang.UnsatisfiedLinkError: /tmp/jffi3876542469706275102.tmp: /tmp/jffi3876542469706275102.tmp: failed to map segment from shared object: Operation not permitted
+~~~~~~~~
 
 this exception then this means you can “not execute” on your /tmp directory.  This can mean that your company security policy block execution on tmp directory. To solve this problem you have two options: first one is giving execution permission on tmp to users, or changing java tmp directory by setting a parameter. 
 To solve the problem by changing java tmp directory:
