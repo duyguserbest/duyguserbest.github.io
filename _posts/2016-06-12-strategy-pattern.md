@@ -1,9 +1,11 @@
 ---
 layout: post
-title:  "Head First Design Patterns: Highlighted Lines: Strategy Pattern"
+title:  "Highlighted Lines on Strategy Pattern"
 date:   2016-06-12 09:59:00
 tags:   java design-patterns
 ---
+
+Talking about code, describing it without common vocabulary is hard. Writing code not knowing optimal way, figuring out the optimal way on the fly, or after it was too late is hard. So overcome this I started reading Head First Design Patterns. I will be posting the lines I highlighted during reading and implementing an example for the pattern I read.
 
 * **Design Principle**: Identify the aspects of your application that vary and separate them from what stays the same.
 
