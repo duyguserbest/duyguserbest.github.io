@@ -2,7 +2,7 @@
 layout: post
 title:  "Head First Design Patterns: Highlighted Lines: Strategy Pattern"
 date:   2016-06-12 09:59:00
-tags:   java design patterns
+tags:   java design-patterns
 ---
 
 * **Design Principle**: Identify the aspects of your application that vary and separate them from what stays the same.

@@ -26,10 +26,6 @@ Do everything listed below for every instance which is a node on hdfs network, y
     * cd hbase-0.94.12/conf
 6. Edit hbase-site.xml using vim and set proper values to configuration properties.
     * vim hbase-site.xml
-    * hbase-site.xml:
-
-  <code data-gist-id="9584b23b6d35409559632819baebc8d8"></code>
-
 7. Edit regionservers file and list all hosts that you would have running Zookeeper.
     * vim regionservers
     * server30
@@ -55,6 +51,10 @@ Do everything listed below for every instance which is a node on hdfs network, y
 10. Symlink hdfs-site.xml under ${HBASE_HOME}/conf.
     * ln -sv /opt/hadoop/hadoop-1.0.4/conf/hdfs-site.xml hdfs-site.xml
 11. Create HBase temp directory and Zookeeper data directory stated on hbase-site.xml.
+
+hbase-site.xml:
+
+  <code data-gist-id="9584b23b6d35409559632819baebc8d8"></code>
 
 ## Starting HBase:
 
