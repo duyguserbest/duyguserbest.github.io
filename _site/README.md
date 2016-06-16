@@ -1,3 +1,0 @@
-# duygu.io
-
-Personal blog.
